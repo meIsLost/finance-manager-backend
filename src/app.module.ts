@@ -9,10 +9,10 @@ import { EntriesModule } from './entries/entries.module';
 
 @Module({
   imports: [
-    CategoriesModule,
-    EntriesModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(dbConfig),
+    CategoriesModule,
+    EntriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
