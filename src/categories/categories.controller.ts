@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   Controller,
   Get,
@@ -6,18 +7,22 @@ import {
   //  Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 //import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    console.log(createCategoryDto);
+  create(@Req() req, @Body() createCategoryDto: CreateCategoryDto) {
+    console.log(createCategoryDto, req.user.id);
     return this.categoriesService.create(createCategoryDto);
   }
 
